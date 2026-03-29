@@ -482,7 +482,7 @@
         }
 
         .about-terminal:hover {
-             transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
         }
 
         .term-header {
@@ -530,9 +530,17 @@
             border-radius: 50%;
         }
 
-        .term-dot.r { background: #ff5f56; }
-        .term-dot.y { background: #ffbd2e; }
-        .term-dot.g { background: #27c93f; }
+        .term-dot.r {
+            background: #ff5f56;
+        }
+
+        .term-dot.y {
+            background: #ffbd2e;
+        }
+
+        .term-dot.g {
+            background: #27c93f;
+        }
 
         .term-body {
             padding: 40px 50px;
@@ -554,13 +562,20 @@
             margin-bottom: 20px;
             display: block;
         }
+
         .cli-cmd-echo {
             opacity: 0.6;
             margin-bottom: 16px;
         }
 
-        .term-body::-webkit-scrollbar { width: 6px; }
-        .term-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        .term-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .term-body::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
 
         .cli-input-line {
             display: flex;
@@ -568,11 +583,13 @@
             position: relative;
             flex-wrap: wrap;
         }
+
         .cli-prompt {
             color: #a5d6ff;
             margin-right: 8px;
             white-space: nowrap;
         }
+
         .cli-ghost-input {
             position: absolute;
             opacity: 0;
@@ -580,21 +597,55 @@
             left: 0;
             z-index: -1;
         }
+
         .cli-text {
             color: var(--text);
         }
-        .term-err { color: #ff7b72; }
-        .term-success { color: #27c93f; }
-        .term-highlight { color: var(--accent); }
 
-        .term-key { color: var(--accent3); }
-        .term-str { color: var(--accent); }
-        .term-bln { color: #ff5e3a; }
-        
-        .term-kwd { color: #ff7b72; }      /* function, class, return, import */
-        .term-cls { color: #d2a8ff; }      /* class name */
-        .term-mth { color: #d2a8ff; }      /* method names */
-        .term-var { color: #79c0ff; }      /* this, properties */
+        .term-err {
+            color: #ff7b72;
+        }
+
+        .term-success {
+            color: #27c93f;
+        }
+
+        .term-highlight {
+            color: var(--accent);
+        }
+
+        .term-key {
+            color: var(--accent3);
+        }
+
+        .term-str {
+            color: var(--accent);
+        }
+
+        .term-bln {
+            color: #ff5e3a;
+        }
+
+        .term-kwd {
+            color: #ff7b72;
+        }
+
+        /* function, class, return, import */
+        .term-cls {
+            color: #d2a8ff;
+        }
+
+        /* class name */
+        .term-mth {
+            color: #d2a8ff;
+        }
+
+        /* method names */
+        .term-var {
+            color: #79c0ff;
+        }
+
+        /* this, properties */
 
         .cursor {
             display: inline-block;
@@ -608,8 +659,15 @@
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
         }
 
         /* WORK */
@@ -993,11 +1051,13 @@
             background: rgba(8, 8, 8, 0.6);
             backdrop-filter: blur(8px);
         }
+
         .progress-wrap.active-progress {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
         }
+
         .progress-wrap::after {
             position: absolute;
             font-family: 'Space Mono', monospace;
@@ -1015,16 +1075,20 @@
             z-index: 1;
             transition: all 300ms cubic-bezier(0.2, 1, 0.3, 1);
         }
+
         .progress-wrap:hover {
             box-shadow: inset 0 0 0 2px rgba(232, 255, 71, 0.4);
         }
+
         .progress-wrap:hover::after {
             transform: translateY(-3px);
             text-shadow: 0 0 10px rgba(232, 255, 71, 0.5);
         }
-        .progress-wrap svg path { 
-            fill: none; 
+
+        .progress-wrap svg path {
+            fill: none;
         }
+
         .progress-wrap svg.progress-circle path {
             stroke: var(--accent);
             stroke-width: 4;
@@ -1033,8 +1097,18 @@
         }
 
         /* MATRIX PARALLAX BACKGROUND */
-        #matrix-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; opacity: 0.12; background: var(--bg); }
-        
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.12;
+            background: var(--bg);
+        }
+
         /* CRT SCANLINES CARRY THE EFFECT NOW (PERFORMANCE FIX) */
 
         .scanlines-overlay {
@@ -1042,10 +1116,10 @@
             inset: 0;
             pointer-events: none;
             z-index: 9998;
-            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.25) 51%);
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.08) 51%);
             background-size: 100% 4px;
         }
-        
+
         /* HELPERS */
         .fade-up {
             opacity: 0;
@@ -1124,13 +1198,13 @@
     <!-- SCROLL PROGRESS RING -->
     <div class="progress-wrap">
         <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
         </svg>
     </div>
 
     <!-- NAV -->
     <nav id="navbar">
-        <a href="#" class="nav-logo">AK.</a>
+        <a href="#" class="nav-logo">VS</a>
         <ul class="nav-links">
             <li><a href="#work">Work</a></li>
             <li><a href="#about">About</a></li>
@@ -1195,10 +1269,11 @@
             <div class="term-body" id="cli-body" onclick="document.getElementById('cli-input').focus()">
                 <div id="cli-output">
                     <div style="color:var(--accent); font-weight:bold;">Welcome to Viraj OS v1.0.0</div>
-                    <div style="opacity:0.75; margin-bottom: 14px;">Type <span class="term-kwd" style="opacity:1">'help'</span> to see available system commands.</div>
+                    <div style="opacity:0.75; margin-bottom: 14px;">Type <span class="term-kwd"
+                            style="opacity:1">'help'</span> to see available system commands.</div>
                 </div>
                 <div class="cli-input-line">
-                    <span class="cli-prompt">visitor@viraj:~$</span> 
+                    <span class="cli-prompt">visitor@viraj:~$</span>
                     <input type="text" id="cli-input" class="cli-ghost-input" autocomplete="off" spellcheck="false">
                     <span class="cli-text"></span><span class="cursor"></span>
                 </div>
@@ -1278,13 +1353,20 @@
                 <p class="section-label fade-up">Tech Stack</p>
                 <h2 class="about-title fade-up">Tools &amp; <em>Technologies</em></h2>
                 <div class="skills-list fade-up">
-                    <div class="skill-item active"><span class="skill-name">HTML</span><span class="skill-cat">Frontend</span></div>
-                    <div class="skill-item"><span class="skill-name">CSS</span><span class="skill-cat">Frontend</span></div>
-                    <div class="skill-item"><span class="skill-name">JavaScript</span><span class="skill-cat">Frontend</span></div>
-                    <div class="skill-item"><span class="skill-name">React</span><span class="skill-cat">Frontend</span></div>
-                    <div class="skill-item"><span class="skill-name">Node.js</span><span class="skill-cat">Backend</span></div>
-                    <div class="skill-item"><span class="skill-name">MongoDB</span><span class="skill-cat">Backend</span></div>
-                    <div class="skill-item"><span class="skill-name">Figma</span><span class="skill-cat">Design</span></div>
+                    <div class="skill-item active"><span class="skill-name">HTML</span><span
+                            class="skill-cat">Frontend</span></div>
+                    <div class="skill-item"><span class="skill-name">CSS</span><span class="skill-cat">Frontend</span>
+                    </div>
+                    <div class="skill-item"><span class="skill-name">JavaScript</span><span
+                            class="skill-cat">Frontend</span></div>
+                    <div class="skill-item"><span class="skill-name">React</span><span class="skill-cat">Frontend</span>
+                    </div>
+                    <div class="skill-item"><span class="skill-name">Node.js</span><span
+                            class="skill-cat">Backend</span></div>
+                    <div class="skill-item"><span class="skill-name">MongoDB</span><span
+                            class="skill-cat">Backend</span></div>
+                    <div class="skill-item"><span class="skill-name">Figma</span><span class="skill-cat">Design</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1295,11 +1377,16 @@
         <div class="blob blob-1" style="top:auto;bottom:-200px;"></div>
         <p class="contact-eyebrow fade-up">Get In Touch</p>
         <h2 class="contact-title fade-up">Let's build<br><em>something</em><br>together</h2>
-        <div id="contact-form-wrap" class="fade-up" style="display:none; max-width: 400px; margin: 0 auto 30px; flex-direction: column; gap: 12px; text-align: left; position: relative; z-index: 10;">
-            <input type="text" id="cf-name" placeholder="Your Name" style="width:100%; padding: 12px; background:var(--surface2); border:1px solid var(--border); color:var(--text); border-radius:8px; font-family: inherit;">
-            <input type="email" id="cf-email" placeholder="Your Email" style="width:100%; padding: 12px; background:var(--surface2); border:1px solid var(--border); color:var(--text); border-radius:8px; font-family: inherit;">
-            <textarea id="cf-message" placeholder="Your Message" rows="4" style="width:100%; padding: 12px; background:var(--surface2); border:1px solid var(--border); color:var(--text); border-radius:8px; resize:vertical; font-family: inherit;"></textarea>
-            <button onclick="submitContactForm()" class="contact-link primary" style="width:100%; justify-content:center; cursor:pointer; background:var(--accent); color:#000;">Submit</button>
+        <div id="contact-form-wrap" class="fade-up"
+            style="display:none; max-width: 400px; margin: 0 auto 30px; flex-direction: column; gap: 12px; text-align: left; position: relative; z-index: 10;">
+            <input type="text" id="cf-name" placeholder="Your Name"
+                style="width:100%; padding: 12px; background:var(--surface2); border:1px solid var(--border); color:var(--text); border-radius:8px; font-family: inherit;">
+            <input type="email" id="cf-email" placeholder="Your Email"
+                style="width:100%; padding: 12px; background:var(--surface2); border:1px solid var(--border); color:var(--text); border-radius:8px; font-family: inherit;">
+            <textarea id="cf-message" placeholder="Your Message" rows="4"
+                style="width:100%; padding: 12px; background:var(--surface2); border:1px solid var(--border); color:var(--text); border-radius:8px; resize:vertical; font-family: inherit;"></textarea>
+            <button onclick="submitContactForm()" class="contact-link primary"
+                style="width:100%; justify-content:center; cursor:pointer; background:var(--accent); color:#000;">Submit</button>
             <p id="cf-status" style="font-size: 13px; text-align: center; color: var(--accent);"></p>
         </div>
         <div class="contact-links fade-up" id="contact-links-container">
@@ -1310,7 +1397,8 @@
                 </svg>
                 Send Message
             </a>
-            <a href="https://www.linkedin.com/in/virajsawant1304/" target="_blank" rel="noopener noreferrer" class="contact-link">
+            <a href="https://www.linkedin.com/in/virajsawant1304/" target="_blank" rel="noopener noreferrer"
+                class="contact-link">
                 <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
                     <rect x="2" y="9" width="4" height="12" />
@@ -1490,7 +1578,7 @@
                         var height = document.documentElement.scrollHeight - window.innerHeight;
                         var progress = pathLength - (scroll * pathLength / height);
                         progressPath.style.strokeDashoffset = progress;
-                        
+
                         if (scroll > 150) {
                             document.querySelector('.progress-wrap').classList.add('active-progress');
                         } else {
@@ -1499,7 +1587,7 @@
                     }
                     updateProgress();
                     window.addEventListener('scroll', updateProgress);
-                    document.querySelector('.progress-wrap').addEventListener('click', function(e) {
+                    document.querySelector('.progress-wrap').addEventListener('click', function (e) {
                         e.preventDefault();
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                     });
@@ -1512,27 +1600,27 @@
                     const target = event.target.closest('.hacker-text');
                     if (!target || target.dataset.scrambling === "true") return;
                     target.dataset.scrambling = "true";
-                    
+
                     const originalText = target.dataset.value || target.textContent.trim();
                     target.dataset.value = originalText;
-                    
+
                     const interval = setInterval(() => {
                         target.textContent = originalText.split("")
                             .map((letter, index) => {
-                                if(letter === ' ') return ' ';
-                                if(index < iterations) return originalText[index];
+                                if (letter === ' ') return ' ';
+                                if (index < iterations) return originalText[index];
                                 return letters[Math.floor(Math.random() * letters.length)];
                             }).join("");
-                        
-                        if(iterations >= originalText.length) {
+
+                        if (iterations >= originalText.length) {
                             clearInterval(interval);
                             target.textContent = originalText; // Ensure exact match at end
                             target.dataset.scrambling = "false";
                         }
-                        iterations += 1/2; // Speed of decoding (lower is slower)
+                        iterations += 1 / 2; // Speed of decoding (lower is slower)
                     }, 30);
                 }
-                
+
                 // Bind scrambled items
                 document.querySelectorAll('.nav-logo, .section-label, .contact-eyebrow, .term-highlight').forEach(el => {
                     el.classList.add('hacker-text');
@@ -1540,31 +1628,31 @@
                     el.addEventListener('mouseenter', hackerTextEffect);
                 });
 
-                /* INTERACTIVE NAVBAR WAVE */
+                /* INTERACTIVE NAVBAR WAVE (NATIVE WAAPI - LAG-FREE) */
                 document.querySelectorAll('.nav-links a').forEach(link => {
                     let inner = link.textContent;
                     link.innerHTML = '';
                     inner.split('').forEach(char => {
                         let span = document.createElement('span');
-                        span.textContent = char === ' ' ? '\\u00A0' : char;
+                        span.textContent = char === ' ' ? '\u00A0' : char;
                         span.style.display = 'inline-block';
-                        span.style.transition = 'transform 0.25s cubic-bezier(0.2, 1, 0.3, 1), color 0.25s';
                         link.appendChild(span);
                     });
-                    
+
                     link.addEventListener('mouseenter', () => {
                         let spans = link.querySelectorAll('span');
                         spans.forEach((span, idx) => {
-                            setTimeout(() => {
-                                span.style.transform = 'translateY(-4px)';
-                                span.style.color = 'var(--text)';
-                                setTimeout(() => { span.style.transform = 'translateY(0)'; }, 200);
-                            }, idx * 35);
+                            span.animate([
+                                { transform: 'translateY(0)', color: 'inherit' },
+                                { transform: 'translateY(-5px)', color: 'var(--accent)', offset: 0.4 },
+                                { transform: 'translateY(0)', color: 'inherit' }
+                            ], {
+                                duration: 400,
+                                delay: idx * 35,
+                                easing: 'cubic-bezier(0.2, 1, 0.3, 1)',
+                                fill: 'forwards'
+                            });
                         });
-                    });
-                    link.addEventListener('mouseleave', () => {
-                        let spans = link.querySelectorAll('span');
-                        spans.forEach(span => { span.style.color = ''; });
                     });
                 });
             }
@@ -1656,24 +1744,24 @@
             /* =====================
                MATRIX BACKGROUND
             ===================== */
-            (function() {
+            (function () {
                 var c = document.getElementById('matrix-canvas');
                 if (!c) return;
                 var ctx = c.getContext('2d');
                 var w, h;
                 var particles = [];
                 var mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
-                
+
                 function resize() {
                     w = c.width = window.innerWidth;
                     h = c.height = window.innerHeight;
                 }
                 window.addEventListener('resize', resize);
                 resize();
-                
-                document.addEventListener('mousemove', function(e) {
-                    mouse.targetX = (e.clientX - w/2) * 0.05;
-                    mouse.targetY = (e.clientY - h/2) * 0.05;
+
+                document.addEventListener('mousemove', function (e) {
+                    mouse.targetX = (e.clientX - w / 2) * 0.05;
+                    mouse.targetY = (e.clientY - h / 2) * 0.05;
                 });
 
                 for (var i = 0; i < 45; i++) {
@@ -1685,35 +1773,35 @@
                         vy: (Math.random() - 0.5) * 0.3
                     });
                 }
-                
+
                 function loop() {
                     requestAnimationFrame(loop);
                     ctx.clearRect(0, 0, w, h);
-                    
+
                     mouse.x += (mouse.targetX - mouse.x) * 0.1;
                     mouse.y += (mouse.targetY - mouse.y) * 0.1;
 
                     ctx.fillStyle = 'rgba(232, 255, 71, 0.4)';
                     ctx.beginPath();
-                    
+
                     for (var i = 0; i < particles.length; i++) {
                         var p = particles[i];
                         p.x += p.vx;
                         p.y += p.vy;
-                        
+
                         if (p.x < 0) p.x = w;
                         if (p.x > w) p.x = 0;
                         if (p.y < 0) p.y = h;
                         if (p.y > h) p.y = 0;
-                        
+
                         var drawX = p.x - mouse.x * p.z;
                         var drawY = p.y - mouse.y * p.z;
-                        
+
                         ctx.moveTo(drawX, drawY);
                         ctx.arc(drawX, drawY, p.z * 1.5, 0, Math.PI * 2);
                     }
                     ctx.fill();
-                    
+
                     ctx.strokeStyle = 'rgba(232, 255, 71, 0.05)';
                     ctx.lineWidth = 0.5;
                     ctx.beginPath();
@@ -1723,7 +1811,7 @@
                             var p2 = particles[j];
                             var dx = (p1.x - mouse.x * p1.z) - (p2.x - mouse.x * p2.z);
                             var dy = (p1.y - mouse.y * p1.z) - (p2.y - mouse.y * p2.z);
-                            var distSq = dx*dx + dy*dy;
+                            var distSq = dx * dx + dy * dy;
                             if (distSq < 25000) {
                                 ctx.moveTo(p1.x - mouse.x * p1.z, p1.y - mouse.y * p1.z);
                                 ctx.lineTo(p2.x - mouse.x * p2.z, p2.y - mouse.y * p2.z);
@@ -1741,45 +1829,47 @@
             /* =====================
                PROJECT CANVASES
             ===================== */
-            window.initProjectCanvases = function() { document.querySelectorAll('.proj-canvas').forEach(function (canvas) {
-                var ctx = canvas.getContext('2d');
-                var hue = parseInt(canvas.dataset.hue, 10) || 60;
-                var W, H, mx = 0.5, my = 0.5;
-                function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
-                resize(); window.addEventListener('resize', resize);
+            window.initProjectCanvases = function () {
+                document.querySelectorAll('.proj-canvas').forEach(function (canvas) {
+                    var ctx = canvas.getContext('2d');
+                    var hue = parseInt(canvas.dataset.hue, 10) || 60;
+                    var W, H, mx = 0.5, my = 0.5;
+                    function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+                    resize(); window.addEventListener('resize', resize);
 
-                var card = canvas.closest('.project-card');
-                card.addEventListener('mousemove', function (e) {
-                    var r = canvas.getBoundingClientRect();
-                    mx = (e.clientX - r.left) / r.width;
-                    my = (e.clientY - r.top) / r.height;
-                });
-
-                var waves = [
-                    { sp: .4, amp: .08, ph: 0 }, { sp: .7, amp: .12, ph: Math.PI / 2 },
-                    { sp: 1.0, amp: .06, ph: Math.PI }, { sp: 1.3, amp: .09, ph: Math.PI * 1.5 }
-                ];
-                var f = 0;
-                function draw() {
-                    requestAnimationFrame(draw); f += .5;
-                    W = canvas.width; H = canvas.height;
-                    ctx.clearRect(0, 0, W, H);
-                    ctx.fillStyle = 'hsl(' + hue + ',14%,6%)'; ctx.fillRect(0, 0, W, H);
-                    waves.forEach(function (w, i) {
-                        ctx.beginPath();
-                        for (var x = 0; x <= W; x += 2) {
-                            var y = H * .5 + Math.sin(x * .02 * w.sp + f * .04 + w.ph + mx * 1.8) * w.amp * H + Math.cos(x * .01 + f * .02) * w.amp * .4 * H;
-                            if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-                        }
-                        ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath();
-                        ctx.fillStyle = 'hsla(' + hue + ',88%,60%,' + (0.14 - i * .03) + ')'; ctx.fill();
+                    var card = canvas.closest('.project-card');
+                    card.addEventListener('mousemove', function (e) {
+                        var r = canvas.getBoundingClientRect();
+                        mx = (e.clientX - r.left) / r.width;
+                        my = (e.clientY - r.top) / r.height;
                     });
-                    var g = ctx.createRadialGradient(mx * W, my * H, 0, mx * W, my * H, W * .4);
-                    g.addColorStop(0, 'hsla(' + hue + ',88%,60%,.13)'); g.addColorStop(1, 'transparent');
-                    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-                }
-                draw();
-            }); };
+
+                    var waves = [
+                        { sp: .4, amp: .08, ph: 0 }, { sp: .7, amp: .12, ph: Math.PI / 2 },
+                        { sp: 1.0, amp: .06, ph: Math.PI }, { sp: 1.3, amp: .09, ph: Math.PI * 1.5 }
+                    ];
+                    var f = 0;
+                    function draw() {
+                        requestAnimationFrame(draw); f += .5;
+                        W = canvas.width; H = canvas.height;
+                        ctx.clearRect(0, 0, W, H);
+                        ctx.fillStyle = 'hsl(' + hue + ',14%,6%)'; ctx.fillRect(0, 0, W, H);
+                        waves.forEach(function (w, i) {
+                            ctx.beginPath();
+                            for (var x = 0; x <= W; x += 2) {
+                                var y = H * .5 + Math.sin(x * .02 * w.sp + f * .04 + w.ph + mx * 1.8) * w.amp * H + Math.cos(x * .01 + f * .02) * w.amp * .4 * H;
+                                if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                            }
+                            ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath();
+                            ctx.fillStyle = 'hsla(' + hue + ',88%,60%,' + (0.14 - i * .03) + ')'; ctx.fill();
+                        });
+                        var g = ctx.createRadialGradient(mx * W, my * H, 0, mx * W, my * H, W * .4);
+                        g.addColorStop(0, 'hsla(' + hue + ',88%,60%,.13)'); g.addColorStop(1, 'transparent');
+                        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+                    }
+                    draw();
+                });
+            };
 
             /* Radar Block Removed */
 
@@ -1787,27 +1877,27 @@
             window.globalSkillsData = null;
 
             const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') && window.location.port !== '3000' ? 'http://localhost:3000' : '';
-            
+
             fetch(API_BASE + '/api/profile').then(res => {
-                if(!res.ok) throw new Error('Network response was not ok');
+                if (!res.ok) throw new Error('Network response was not ok');
                 return res.json();
             }).then(data => {
                 document.querySelector('.hero-sub').textContent = data.about_text;
-                
+
                 /* SENTIENT TERMINAL AUTO TYPE */
                 let aboutBody = document.querySelector('.about-body');
                 aboutBody.dataset.fulltext = data.about_text;
                 aboutBody.innerHTML = '<span class="typing-text"></span><span class="cursor" style="background:var(--accent);"></span>';
-                
+
                 ScrollTrigger.create({
                     trigger: aboutBody,
                     start: "top 85%",
                     once: true,
-                    onEnter: function() {
+                    onEnter: function () {
                         let textToType = aboutBody.dataset.fulltext;
                         let typeNode = aboutBody.querySelector('.typing-text');
                         let i = 0;
-                        let typeInterval = setInterval(function() {
+                        let typeInterval = setInterval(function () {
                             if (i < textToType.length) {
                                 typeNode.textContent += textToType.charAt(i);
                                 i++;
@@ -1823,21 +1913,21 @@
                 const cliOutput = document.getElementById('cli-output');
                 const cliBody = document.getElementById('cli-body');
 
-                if(cliInput) {
+                if (cliInput) {
                     cliInput.addEventListener('input', (e) => {
                         cliText.textContent = cliInput.value;
                         cliBody.scrollTop = cliBody.scrollHeight;
                     });
 
                     cliInput.addEventListener('keydown', (e) => {
-                        if(e.key === 'Enter') {
+                        if (e.key === 'Enter') {
                             const rawCmd = cliInput.value.trim();
                             const cmd = rawCmd.toLowerCase();
-                            
+
                             let newHtml = `<div class="cli-row cli-cmd-echo"><span class="cli-prompt">visitor@viraj:~$</span> ${rawCmd}</div>`;
-                            
+
                             if (cmd) {
-                                switch(cmd) {
+                                switch (cmd) {
                                     case 'help':
                                         newHtml += `<div class="cli-row" style="display:grid; grid-template-columns: 140px 1fr; gap:12px;">
                                         <span class="term-kwd">whoami</span><span style="opacity:0.8;">- View my background</span>
@@ -1869,7 +1959,7 @@
                                     case 'sudo hire':
                                         newHtml += `<div class="term-success cli-row" style="color:#ff5f56; font-weight:bold;">[ERROR: FIREWALL BREACHED]</div><div class="cli-row" style="opacity:0.8;">Initiating unblockable priority contact protocol...</div>`;
                                         setTimeout(() => {
-                                            document.getElementById('contact').scrollIntoView({behavior: 'smooth'});
+                                            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
                                         }, 1200);
                                         break;
                                     default:
@@ -1878,7 +1968,7 @@
                                 }
                             }
                             cliOutput.innerHTML = newHtml;
-                            
+
                             cliInput.value = '';
                             cliText.textContent = '';
                             cliBody.scrollTop = cliBody.scrollHeight;
@@ -1887,7 +1977,7 @@
                 }
                 return fetch(API_BASE + '/api/projects');
             }).then(res => {
-                if(!res.ok) throw new Error('Network response was not ok');
+                if (!res.ok) throw new Error('Network response was not ok');
                 return res.json();
             }).then(data => {
                 const pg = document.querySelector('.projects-grid');
@@ -1905,7 +1995,7 @@
                 }
                 return fetch(API_BASE + '/api/skills');
             }).then(res => {
-                if(!res.ok) throw new Error('Network response was not ok');
+                if (!res.ok) throw new Error('Network response was not ok');
                 return res.json();
             }).then(data => {
                 const sl = document.querySelector('.skills-list');
@@ -1915,55 +2005,55 @@
                     `).join('');
                 }
             }).catch(e => console.error("API error, testing with static UI", e)).finally(() => {
-                if(window.initProjectCanvases) window.initProjectCanvases();
+                if (window.initProjectCanvases) window.initProjectCanvases();
                 init();
             });
-            
-            window.showContactForm = function(e) {
+
+            window.showContactForm = function (e) {
                 e.preventDefault();
                 document.getElementById('contact-links-container').style.display = 'none';
                 document.getElementById('contact-form-wrap').style.display = 'flex';
             };
-            
-            window.submitContactForm = async function() {
+
+            window.submitContactForm = async function () {
                 const name = document.getElementById('cf-name').value;
                 const email = document.getElementById('cf-email').value;
                 const message = document.getElementById('cf-message').value;
                 const btn = document.querySelector('#contact-form-wrap button');
                 const status = document.getElementById('cf-status');
-                
-                if(!name || !email || !message) { status.textContent = "Please fill all fields"; return; }
-                
+
+                if (!name || !email || !message) { status.textContent = "Please fill all fields"; return; }
+
                 btn.textContent = "Sending...";
                 status.textContent = "";
 
                 try {
                     const res = await fetch(API_BASE + '/api/messages', {
                         method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({name, email, message})
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, email, message })
                     });
-                    
+
                     if (!res.ok) {
                         const errData = await res.json().catch(() => ({}));
                         throw new Error(errData.error || "Failed to send message on server.");
                     }
-                    
+
                     const data = await res.json();
-                    
+
                     status.textContent = "Message sent successfully!";
                     btn.style.display = 'none';
-                    
+
                     // Clear the form
                     document.getElementById('cf-name').value = '';
                     document.getElementById('cf-email').value = '';
                     document.getElementById('cf-message').value = '';
-                    
+
                     // Revert to social links view after 2.5 seconds
                     setTimeout(() => {
                         document.getElementById('contact-form-wrap').style.display = 'none';
                         document.getElementById('contact-links-container').style.display = 'flex';
-                        
+
                         // Reset button and status for future use
                         btn.style.display = '';
                         btn.textContent = "Submit";
