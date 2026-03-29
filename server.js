@@ -5,10 +5,31 @@ const cors = require('cors');
 const path = require('path');
 const nodemailer = require('nodemailer');
 
+// Security imports
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const xss = require('xss-clean');
+
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware
+// === CYBER SECURITY MIDDLEWARE ===
+app.use(helmet({
+    contentSecurityPolicy: false, // Prevents breaking inline scripts and GSAP CDN
+})); // Set secure HTTP headers
+app.use(xss());    // Prevent cross-site scripting in req bodies
+
+// Anti-DDoS / Anti-spam rate limiting
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 mins
+    max: 100, // 100 req per IP per 15 min window
+    message: { error: 'Too many requests from this IP. Please wait 15 minutes before trying again.' },
+    standardHeaders: true, 
+    legacyHeaders: false,
+});
+app.use('/api', limiter); // Lock down all API routes
+
+// Core Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
