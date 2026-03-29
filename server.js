@@ -92,7 +92,10 @@ app.post('/api/messages', (req, res) => {
         [name, email, message], function(err) {
             if (err) return res.status(500).json({ error: err.message });
             
-            // Dispatch email notification
+            // Respond IMMEDIATELY to make the UI fast
+            res.status(201).json({ success: true, message: "Message received successfully!" });
+            
+            // Dispatch email notification asynchronously
             const mailOptions = {
                 from: process.env.EMAIL_USER,
                 to: process.env.EMAIL_USER, // Send to your own email address
@@ -104,10 +107,9 @@ app.post('/api/messages', (req, res) => {
             transporter.sendMail(mailOptions, (mailErr, info) => {
                 if (mailErr) {
                     console.error("Nodemailer Error:", mailErr);
-                    // Return positive status since it's saved in the DB, but log error
-                    return res.status(201).json({ success: true, message: "Saved to DB, but email notification failed." });
+                } else {
+                    console.log("Email notification sent successfully!");
                 }
-                res.status(201).json({ success: true, message: "Message received and emailed successfully!" });
             });
         });
 });
