@@ -974,6 +974,78 @@
             color: var(--accent)
         }
 
+        /* PROGRESS RING */
+        .progress-wrap {
+            position: fixed;
+            right: 32px;
+            bottom: 32px;
+            height: 48px;
+            width: 48px;
+            cursor: pointer;
+            display: block;
+            border-radius: 50px;
+            box-shadow: inset 0 0 0 2px rgba(232, 255, 71, 0.1);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 400ms cubic-bezier(0.2, 1, 0.3, 1);
+            background: rgba(8, 8, 8, 0.6);
+            backdrop-filter: blur(8px);
+        }
+        .progress-wrap.active-progress {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .progress-wrap::after {
+            position: absolute;
+            font-family: 'Space Mono', monospace;
+            content: '↑';
+            text-align: center;
+            line-height: 48px;
+            font-size: 16px;
+            color: var(--accent);
+            left: 0;
+            top: 0;
+            height: 48px;
+            width: 48px;
+            cursor: pointer;
+            display: block;
+            z-index: 1;
+            transition: all 300ms cubic-bezier(0.2, 1, 0.3, 1);
+        }
+        .progress-wrap:hover {
+            box-shadow: inset 0 0 0 2px rgba(232, 255, 71, 0.4);
+        }
+        .progress-wrap:hover::after {
+            transform: translateY(-3px);
+            text-shadow: 0 0 10px rgba(232, 255, 71, 0.5);
+        }
+        .progress-wrap svg path { 
+            fill: none; 
+        }
+        .progress-wrap svg.progress-circle path {
+            stroke: var(--accent);
+            stroke-width: 4;
+            box-sizing: border-box;
+            transition: all 200ms linear;
+        }
+
+        /* MATRIX PARALLAX BACKGROUND */
+        #matrix-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; opacity: 0.12; background: var(--bg); }
+        
+        /* CRT SCANLINES CARRY THE EFFECT NOW (PERFORMANCE FIX) */
+
+        .scanlines-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9998;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.25) 51%);
+            background-size: 100% 4px;
+        }
+        
         /* HELPERS */
         .fade-up {
             opacity: 0;
@@ -1034,6 +1106,12 @@
 
 <body>
 
+    <!-- MATRIX PARALLAX BACKGROUND -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- CRT SCANLINES -->
+    <div class="scanlines-overlay"></div>
+
     <!-- LOADER -->
     <div id="loader">
         <div id="loader-num">00</div>
@@ -1041,6 +1119,13 @@
             <div id="loader-bar"></div>
         </div>
         <div id="loader-label">Initializing Experience</div>
+    </div>
+
+    <!-- SCROLL PROGRESS RING -->
+    <div class="progress-wrap">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+        </svg>
     </div>
 
     <!-- NAV -->
@@ -1390,6 +1475,98 @@
                         gsap.fromTo(item, { x: -8 }, { x: 0, duration: 0.4, ease: 'expo.out' });
                     });
                 });
+
+                /* SCROLL PROGRESS RING LOGIC */
+                var progressPath = document.querySelector('.progress-wrap path');
+                if (progressPath) {
+                    var pathLength = progressPath.getTotalLength();
+                    progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
+                    progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
+                    progressPath.style.strokeDashoffset = pathLength;
+                    progressPath.getBoundingClientRect(); // force layout
+                    progressPath.style.transition = progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
+                    var updateProgress = function () {
+                        var scroll = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+                        var height = document.documentElement.scrollHeight - window.innerHeight;
+                        var progress = pathLength - (scroll * pathLength / height);
+                        progressPath.style.strokeDashoffset = progress;
+                        
+                        if (scroll > 150) {
+                            document.querySelector('.progress-wrap').classList.add('active-progress');
+                        } else {
+                            document.querySelector('.progress-wrap').classList.remove('active-progress');
+                        }
+                    }
+                    updateProgress();
+                    window.addEventListener('scroll', updateProgress);
+                    document.querySelector('.progress-wrap').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                }
+
+                /* HACKER DECODE SCRAMBLE EFFECT */
+                const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!<>-_\\/[]{}—=+*^?#_";
+                function hackerTextEffect(event) {
+                    let iterations = 0;
+                    const target = event.target.closest('.hacker-text');
+                    if (!target || target.dataset.scrambling === "true") return;
+                    target.dataset.scrambling = "true";
+                    
+                    const originalText = target.dataset.value || target.textContent.trim();
+                    target.dataset.value = originalText;
+                    
+                    const interval = setInterval(() => {
+                        target.textContent = originalText.split("")
+                            .map((letter, index) => {
+                                if(letter === ' ') return ' ';
+                                if(index < iterations) return originalText[index];
+                                return letters[Math.floor(Math.random() * letters.length)];
+                            }).join("");
+                        
+                        if(iterations >= originalText.length) {
+                            clearInterval(interval);
+                            target.textContent = originalText; // Ensure exact match at end
+                            target.dataset.scrambling = "false";
+                        }
+                        iterations += 1/2; // Speed of decoding (lower is slower)
+                    }, 30);
+                }
+                
+                // Bind scrambled items
+                document.querySelectorAll('.nav-logo, .section-label, .contact-eyebrow, .term-highlight').forEach(el => {
+                    el.classList.add('hacker-text');
+                    el.dataset.value = el.textContent.trim();
+                    el.addEventListener('mouseenter', hackerTextEffect);
+                });
+
+                /* INTERACTIVE NAVBAR WAVE */
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    let inner = link.textContent;
+                    link.innerHTML = '';
+                    inner.split('').forEach(char => {
+                        let span = document.createElement('span');
+                        span.textContent = char === ' ' ? '\\u00A0' : char;
+                        span.style.display = 'inline-block';
+                        span.style.transition = 'transform 0.25s cubic-bezier(0.2, 1, 0.3, 1), color 0.25s';
+                        link.appendChild(span);
+                    });
+                    
+                    link.addEventListener('mouseenter', () => {
+                        let spans = link.querySelectorAll('span');
+                        spans.forEach((span, idx) => {
+                            setTimeout(() => {
+                                span.style.transform = 'translateY(-4px)';
+                                span.style.color = 'var(--text)';
+                                setTimeout(() => { span.style.transform = 'translateY(0)'; }, 200);
+                            }, idx * 35);
+                        });
+                    });
+                    link.addEventListener('mouseleave', () => {
+                        let spans = link.querySelectorAll('span');
+                        spans.forEach(span => { span.style.color = ''; });
+                    });
+                });
             }
 
             /* =====================
@@ -1477,6 +1654,88 @@
             })();
 
             /* =====================
+               MATRIX BACKGROUND
+            ===================== */
+            (function() {
+                var c = document.getElementById('matrix-canvas');
+                if (!c) return;
+                var ctx = c.getContext('2d');
+                var w, h;
+                var particles = [];
+                var mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+                
+                function resize() {
+                    w = c.width = window.innerWidth;
+                    h = c.height = window.innerHeight;
+                }
+                window.addEventListener('resize', resize);
+                resize();
+                
+                document.addEventListener('mousemove', function(e) {
+                    mouse.targetX = (e.clientX - w/2) * 0.05;
+                    mouse.targetY = (e.clientY - h/2) * 0.05;
+                });
+
+                for (var i = 0; i < 45; i++) {
+                    particles.push({
+                        x: Math.random() * w,
+                        y: Math.random() * h,
+                        z: Math.random() * 2 + 0.1,
+                        vx: (Math.random() - 0.5) * 0.3,
+                        vy: (Math.random() - 0.5) * 0.3
+                    });
+                }
+                
+                function loop() {
+                    requestAnimationFrame(loop);
+                    ctx.clearRect(0, 0, w, h);
+                    
+                    mouse.x += (mouse.targetX - mouse.x) * 0.1;
+                    mouse.y += (mouse.targetY - mouse.y) * 0.1;
+
+                    ctx.fillStyle = 'rgba(232, 255, 71, 0.4)';
+                    ctx.beginPath();
+                    
+                    for (var i = 0; i < particles.length; i++) {
+                        var p = particles[i];
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        
+                        if (p.x < 0) p.x = w;
+                        if (p.x > w) p.x = 0;
+                        if (p.y < 0) p.y = h;
+                        if (p.y > h) p.y = 0;
+                        
+                        var drawX = p.x - mouse.x * p.z;
+                        var drawY = p.y - mouse.y * p.z;
+                        
+                        ctx.moveTo(drawX, drawY);
+                        ctx.arc(drawX, drawY, p.z * 1.5, 0, Math.PI * 2);
+                    }
+                    ctx.fill();
+                    
+                    ctx.strokeStyle = 'rgba(232, 255, 71, 0.05)';
+                    ctx.lineWidth = 0.5;
+                    ctx.beginPath();
+                    for (var i = 0; i < particles.length; i++) {
+                        for (var j = i + 1; j < particles.length; j++) {
+                            var p1 = particles[i];
+                            var p2 = particles[j];
+                            var dx = (p1.x - mouse.x * p1.z) - (p2.x - mouse.x * p2.z);
+                            var dy = (p1.y - mouse.y * p1.z) - (p2.y - mouse.y * p2.z);
+                            var distSq = dx*dx + dy*dy;
+                            if (distSq < 25000) {
+                                ctx.moveTo(p1.x - mouse.x * p1.z, p1.y - mouse.y * p1.z);
+                                ctx.lineTo(p2.x - mouse.x * p2.z, p2.y - mouse.y * p2.z);
+                            }
+                        }
+                    }
+                    ctx.stroke();
+                }
+                loop();
+            })();
+
+            /* =====================
             /* Canvas logic removed */
 
             /* =====================
@@ -1534,7 +1793,30 @@
                 return res.json();
             }).then(data => {
                 document.querySelector('.hero-sub').textContent = data.about_text;
-                document.querySelector('.about-body').textContent = data.about_text;
+                
+                /* SENTIENT TERMINAL AUTO TYPE */
+                let aboutBody = document.querySelector('.about-body');
+                aboutBody.dataset.fulltext = data.about_text;
+                aboutBody.innerHTML = '<span class="typing-text"></span><span class="cursor" style="background:var(--accent);"></span>';
+                
+                ScrollTrigger.create({
+                    trigger: aboutBody,
+                    start: "top 85%",
+                    once: true,
+                    onEnter: function() {
+                        let textToType = aboutBody.dataset.fulltext;
+                        let typeNode = aboutBody.querySelector('.typing-text');
+                        let i = 0;
+                        let typeInterval = setInterval(function() {
+                            if (i < textToType.length) {
+                                typeNode.textContent += textToType.charAt(i);
+                                i++;
+                            } else {
+                                clearInterval(typeInterval);
+                            }
+                        }, 25);
+                    }
+                });
 
                 const cliInput = document.getElementById('cli-input');
                 const cliText = document.querySelector('.cli-text');
